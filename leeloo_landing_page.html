@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leeloo - Your AI Personal Assistant That Actually Works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #e1f5fe 50%, #e0f7fa 75%, #f1f8e9 100%);
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .subhead, .testimonial-quote {
+            font-family: 'Roboto Slab', serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 50%, #e1f5fe 100%);
+            color: #13186c;
+            padding: 30px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://raw.githubusercontent.com/aigain-automations/Images/main/leeloo_city3.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: 0;
+        }
+        
+        .hero-image-left {
+            position: absolute;
+            top: 104px;
+            left: 20px;
+            max-width: 250px;
+            width: 100%;
+            opacity: 0.9;
+            z-index: 1;
+        }
+        
+        .hero-image-right {
+            position: absolute;
+            top: 130px;
+            right: 20px;
+            max-width: 336px;
+            width: 100%;
+            opacity: 0.9;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+        
+        .logo {
+            max-width: 300px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: #2d1b69;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero .subhead {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            color: #2d1b69;
+            max-width: 64%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #1976d2;
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #1565c0;
+        }
+        
+        .reassurance {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bullet-points {
+            text-align: left;
+            max-width: 1210px;
+            margin: 40px auto 0;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 15px;
+            list-style: none;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bullet-points li {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            color: #2d1b69;
+        }
+        
+        .bullet-points li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #1976d2;
+            font-size: 1.5rem;
+        }
+        
+        /* Social Proof Section */
+        .social-proof {
+            padding: 10px 10px;
+            background: linear-gradient(135deg, #e1f5fe 0%, #e3f2fd 50%, #e8eaf6 100%);
+            text-align: center;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .badge {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .badge-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 5px;
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .problem h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2d3748;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background: #ffebee;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #d32f2f;
+        }
+        
+        .problem-card h3 {
+            color: #c62828;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* Solution Section */
+        .solution {
+            padding: 80px 20px;
+            background: #1976d2;
+            color: white;
+        }
+        
+        .solution h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 50%, #e1f5fe 100%);
+        }
+        
+        .testimonials h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2d3748;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .testimonial {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 3px solid #1976d2;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #1976d2;
+        }
+        
+        .testimonial-tldr {
+            background: #1976d2;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 50%, #e1f5fe 100%);
+        }
+        
+        .pricing h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .pricing-intro {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            color: #4a5568;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+        
+        .pricing-card {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #1976d2;
+            transform: scale(1.02);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.02) translateY(-10px);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #0288d1;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #2d1b69;
+        }
+        
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: #2d3748;
+        }
+        
+        .pricing-card .price span {
+            font-size: 1.2rem;
+            color: #718096;
+        }
+        
+        .pricing-features {
+            text-align: left;
+            margin: 30px 0;
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #2d1b69;
+        }
+        
+        .pricing-cta-wrapper {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+        
+        /* Modules Section */
+        .modules {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #e8eaf6 50%, #e3f2fd 100%);
+        }
+        
+        .modules h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .modules-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            color: #4a5568;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 50px;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .module-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .module-card h3 {
+            color: #13186c;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .module-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .module-card ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .module-card ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1976d2;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff6b6b;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .note-box strong {
+            color: #13186c;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 20px;
+            background: #1976d2;
+            text-align: center;
+            color: white;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .final-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+        
+        /* Footer Summary */
+        .footer-summary {
+            background: #2d3748;
+            color: white;
+            padding: 60px 20px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .summary-item h3 {
+            margin-bottom: 15px;
+            color: #42a5f5;
+        }
+        
+        .summary-item p {
+            line-height: 1.8;
+        }
+        
+        .summary-item:last-child {
+            grid-column: 1 / -1;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .summary-item:last-child h3 {
+            text-align: center;
+        }
+        
+        .summary-item:last-child p {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .summary-item:last-child a {
+            background: #1976d2;
+        }
+        
+        .summary-item:last-child a:hover {
+            background: #1565c0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.5rem;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .logo {
+                max-width: 250px;
+            }
+            
+            .hero .subhead {
+                font-size: 1rem;
+                max-width: 100%;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .hero-image-left,
+            .hero-image-right {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
+            .hero::before {
+                opacity: 0.05;
+            }
+            
+            .hero::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.7);
+                z-index: 0;
+            }
+            
+            .bullet-points {
+                background: rgba(255, 255, 255, 0.95);
+                max-width: 100%;
+                padding: 25px;
+            }
+            
+            .cta-button {
+                position: relative;
+                z-index: 2;
+            }
+            
+            .reassurance {
+                position: relative;
+                z-index: 2;
+            }
+            
+            .problem h2, .solution h2, .testimonials h2, .pricing h2, .modules h2 {
+                font-size: 2rem;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 1200px) and (min-width: 769px) {
+            .hero-image-left {
+                max-width: 180px;
+                top: 107px;
+            }
+            
+            .hero-image-right {
+                max-width: 270px;
+                top: 125px;
+            }
+            
+            .hero-content {
+                padding: 0 40px;
+            }
+            
+            .hero .subhead {
+                max-width: 75%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/leeloo_guy-giving-instructions-to-smartphone.png" alt="Person using smartphone" class="hero-image-left">
+        <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/leeloo_tools-activating.png" alt="Tools activating" class="hero-image-right">
+        
+        <div class="hero-content">
+            <div class="container">
+                <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/logo_leeloo_final.png" alt="Leeloo Logo" class="logo">
+                <h1>Your Game-Changing AI Assistant.<br>You Speak. Leeloo Executes.</h1>
+                <p class="subhead">Manages your emails, calendar, contacts, and web searches — all by simple voice or text commands. <em>Just say:<br>
+                • "Reply in Japanese to Ken's email confirming I'll attend the meeting."<br>
+                • "Set up a Project Alpha meeting tomorrow at 3 PM with Ben and Lola, and ask them to prepare a PowerPoint."<br>
+                And it's done!</em></p>
+                
+                <a href="#pricing" class="cta-button">See How Leeloo Works</a>
+                <p class="reassurance">Set up in 15 minutes. Free trial available for Starter plan.</p>
+                
+                <ul class="bullet-points">
+                    <li>Schedule meetings, send emails, and manage contacts using just your voice or text - all from Telegram</li>
+                    <li>Real control over your Google/Outlook accounts, not just content creation like other AI tools</li>
+                    <li>Works in any language, remembers your preferences, and learns your communication style</li>
+                    <li>Get instant answers with web search and real-time weather information - just ask Leeloo anything</li>
+                    <li style="font-style: italic; color: #2d1b69;">Additional modules allow you to scan business cards, generate invoices, track expenses, sync with CRM systems, manage tasks in Notion/Asana/Trello, schedule meetings like Calendly, get daily AI-powered summaries, analyze documents with AI, and create your own company knowledge base</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="trust-badges">
+                <div class="badge">
+                    <span class="badge-number">1-3hrs</span>
+                    Saved per day
+                </div>
+                <div class="badge">
+                    <span class="badge-number">15min</span>
+                    Average setup time
+                </div>
+                <div class="badge">
+                    <span class="badge-number">30+</span>
+                    Supported languages
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2>Managing Your Digital Life Shouldn't Feel Like a Full-Time Job</h2>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Constantly Switching Apps</h3>
+                    <p>You're still opening Gmail, switching to Calendar, then checking Contacts. Your assistant gives suggestions while you handle all the actual work.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>Limited Real Control</h3>
+                    <p>Most AI tools create drafts or search results. You still need to copy, paste, click, and manually complete every single task yourself.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>Locked in Platforms</h3>
+                    <p>Your data sits in web interfaces. Voice control is limited. Collaboration is difficult. Workflow automation remains out of reach.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2>Leeloo Executes Your Instructions</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎙️</span>
+                    <h3>Voice or Text</h3>
+                    <p>"Schedule lunch with Ben tomorrow at noon and send him confirmation" - Done. No apps to open, no clicks needed.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📧</span>
+                    <h3>Real Email Control</h3>
+                    <p>Sends emails, creates drafts, replies to threads, and labels messages. Not just suggestions - actual execution.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📅</span>
+                    <h3>Calendar Intelligence</h3>
+                    <p>Creates events with attendees, checks availability, reschedules meetings, sends updates. Handles the entire workflow.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3>Smart Contacts</h3>
+                    <p>Remembers nicknames, finds contact details, updates information. Say "email Ben" and it knows exactly who you mean.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <h3>Any Language</h3>
+                    <p>Communicate in French, English, Spanish, Chinese - whatever feels natural. Leeloo responds in your language.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🔍</span>
+                    <h3>Web Search & Weather</h3>
+                    <p>Get instant answers to research questions, current news, and weather forecasts. Ask in natural language and receive comprehensive results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>People Who Got Their Time Back</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/Woman1.png" alt="Sarah M." class="testimonial-image">
+                    <div class="testimonial-tldr">TLDR: 2 hours saved daily</div>
+                    <p class="testimonial-quote">"I used to spend 30 minutes every morning just organizing my inbox and calendar. Now I voice message Leeloo while making coffee and everything is handled before I sit down."</p>
+                    <p class="testimonial-author">- Sarah M., Marketing Consultant</p>
+                </div>
+                
+                <div class="testimonial">
+                    <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/Man1.png" alt="David L." class="testimonial-image">
+                    <div class="testimonial-tldr">TLDR: No more app switching</div>
+                    <p class="testimonial-quote">"The game-changer is that it actually does the work. Other AI tools give me suggestions. Leeloo sends the email, creates the meeting, updates the contact. I just keep moving."</p>
+                    <p class="testimonial-author">- David L., Startup Founder</p>
+                </div>
+                
+                <div class="testimonial">
+                    <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/Woman2.png" alt="Marie D." class="testimonial-image">
+                    <div class="testimonial-tldr">TLDR: Cross-language magic</div>
+                    <p class="testimonial-quote">"I'm French and currently working in Japan. I can speak Japanese fairly well, but writing is still a challenge for me. That's where Leeloo comes in – it does the job perfectly! For example, I just say: 'Send an email in Japanese to Lola asking her to prepare the PowerPoint for tomorrow's meeting,' and it's done. A real game-changer! It probably saves me around three hours every day."</p>
+                    <p class="testimonial-author">- Marie D., International Sales Director</p>
+                </div>
+                
+                <div class="testimonial">
+                    <img src="https://raw.githubusercontent.com/aigain-automations/Images/main/Man2.png" alt="Julien D." class="testimonial-image">
+                    <div class="testimonial-tldr">TLDR: Running business from anywhere</div>
+                    <p class="testimonial-quote">"As a CEO constantly traveling between Paris, New York, and Singapore, Leeloo is my secret weapon. I can manage my entire team's schedule, respond to urgent client emails, and coordinate meetings across time zones—all while waiting for my flight. No laptop needed, just quick voice messages to Leeloo. It's like having my executive assistant available 24/7 in my pocket."</p>
+                    <p class="testimonial-author">- Julien D., CEO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Choose Your Plan</h2>
+            <p class="pricing-intro">Start with what you need today. Scale as your needs grow.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$89<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ Intelligent calendar management</li>
+                        <li>✓ Email operations (send, reply, draft, organize)</li>
+                        <li>✓ Smart reminders and alerts</li>
+                        <li>✓ Contact management</li>
+                        <li>✓ Web search and weather</li>
+                        <li>✓ Voice and text input via Telegram</li>
+                        <li>✓ Multi-language support</li>
+                        <li>✓ 2,000 messages per month</li>
+                        <li>✓ Email support</li>
+                        <li>✓ Self-service setup with video guides</li>
+                    </ul>
+                    <div class="pricing-cta-wrapper">
+                        <a href="#" class="cta-button">Start 14-Day Free Trial</a>
+                        <p class="reassurance">$890/year (save $178)<br><strong>No credit card required</strong></p>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <h3>Business</h3>
+                    <div class="price">$249<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li><strong>Everything in Starter, PLUS:</strong></li>
+                        <li>✓ Long-term memory & conversation learning</li>
+                        <li>✓ Historical context awareness</li>
+                        <li>✓ Document reading (PDF, Word, images)</li>
+                        <li>✓ Choose ANY 2 modules (see below)</li>
+                        <li>✓ 10,000 messages per month</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ 30-minute onboarding call</li>
+                    </ul>
+                    <div class="pricing-cta-wrapper">
+                        <a href="#" class="cta-button">Get Started</a>
+                        <p class="reassurance">$2,490/year (save $498)<br><strong>Minimum 2-month subscription</strong></p>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Expert</h3>
+                    <div class="price">$499<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li><strong>Everything in Starter, PLUS:</strong></li>
+                        <li>✓ Long-term memory & conversation learning</li>
+                        <li>✓ Historical context awareness</li>
+                        <li>✓ Choose ANY 4 modules (see below)</li>
+                        <li>✓ Historical analysis dashboard</li>
+                        <li>✓ Custom workflow automation</li>
+                        <li>✓ API access for integrations</li>
+                        <li>✓ White-label option</li>
+                        <li>✓ Unlimited messages</li>
+                        <li>✓ White-glove setup & training</li>
+                        <li>✓ Quarterly business reviews</li>
+                    </ul>
+                    <div class="pricing-cta-wrapper">
+                        <a href="#" class="cta-button">Get Started</a>
+                        <p class="reassurance">$4,990/year (save $998)<br><strong>Minimum 2-month subscription</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>Payment Terms:</strong> Monthly billing (cancel anytime for Starter). Annual billing saves 17%. 14-day money-back guarantee (except $249 setup retainer for Business and Expert plans). No setup fees. Secure payment via Stripe.</p>
+                <p style="margin-top: 10px;"><strong>Note:</strong> This is a personal AI assistant accessed via your individual Telegram account. One subscription = one Telegram user.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="modules">
+        <div class="container">
+            <h2>Additional Modules for Business or Expert Plan</h2>
+            <p class="modules-intro">Choose based on your Business (2 modules) or Expert (4 modules) plan.</p>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>1. Daily Summary & Smart Alerts</h3>
+                    <ul>
+                        <li>Morning personalized briefing via email and voice</li>
+                        <li>Unread emails with priority filtering</li>
+                        <li>Complete day's agenda</li>
+                        <li>Weather forecast</li>
+                        <li>Financial news (S&P 500, NASDAQ)</li>
+                        <li>Exchange rates (Bitcoin, EUR/USD)</li>
+                        <li>AI-filtered important email alerts</li>
+                        <li>Meeting reminders with prep tips</li>
+                        <li>End-of-day summary</li>
+                        <li>Weekend planning on Fridays</li>
+                        <li>Customizable up to 5 sections</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>2. Business Card Scanner</h3>
+                    <ul>
+                        <li>Capture business cards via Telegram</li>
+                        <li>OpenAI Vision API extraction</li>
+                        <li>Auto-creates/updates Google Contacts</li>
+                        <li>Confirmation with extracted data</li>
+                        <li>Multiple languages and formats</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>3. Document Intelligence</h3>
+                    <ul>
+                        <li>Analyze PDF, Word, Text, Images</li>
+                        <li>Multi-page PDF analysis</li>
+                        <li>Summarize, translate, compare</li>
+                        <li>Contract key points extraction</li>
+                        <li>Document comparison</li>
+                        <li>Form data extraction</li>
+                        <li>Meeting minutes from recordings</li>
+                        <li>Document translation</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>4. Invoice Generator</h3>
+                    <ul>
+                        <li>Create PDF invoices from voice/text</li>
+                        <li>Customizable branded templates</li>
+                        <li>Auto-numbering and date tracking</li>
+                        <li>Google Drive storage by client/date</li>
+                        <li>Send directly via email</li>
+                        <li>Multiple currencies and tax calculations</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>5. Expense Tracker</h3>
+                    <ul>
+                        <li>Scan receipts via photo</li>
+                        <li>Auto-categorize expenses</li>
+                        <li>Monthly expense reports</li>
+                        <li>Google Sheets integration</li>
+                        <li>Mileage tracking from calendar</li>
+                        <li>Currency conversion</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>6. Meeting Scheduler Pro</h3>
+                    <ul>
+                        <li>Calendly-style booking links</li>
+                        <li>Availability sharing</li>
+                        <li>Multi-person scheduling optimization</li>
+                        <li>Time zone handling</li>
+                        <li>Buffer time management</li>
+                        <li>Recurring meeting templates</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>7. CRM Sync</h3>
+                    <ul>
+                        <li>HubSpot/Salesforce integration</li>
+                        <li>Automatic contact syncing</li>
+                        <li>Deal/opportunity tracking</li>
+                        <li>Activity logging from emails/meetings</li>
+                        <li>Pipeline reporting</li>
+                        <li>Task synchronization</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>8. Advanced Task Management</h3>
+                    <ul>
+                        <li>Notion/Asana/Trello integration</li>
+                        <li>Project creation from conversations</li>
+                        <li>Task dependencies tracking</li>
+                        <li>Team assignment capabilities</li>
+                        <li>Progress reporting</li>
+                        <li>Sprint planning support</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>9. RAG/Knowledge Base</h3>
+                    <ul>
+                        <li>Upload company documents, policies, procedures</li>
+                        <li>10GB storage in Neon with pgvector</li>
+                        <li>Intelligent retrieval for questions</li>
+                        <li>Document versioning and updates</li>
+                        <li>Team knowledge sharing</li>
+                        <li>Automatic FAQ generation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Get Your Time Back?</h2>
+            <p>Join hundreds of professionals who've automated their daily tasks with Leeloo.</p>
+            <p style="font-size: 1.1rem; margin-bottom: 40px;">Your first automated task happens within 20 minutes of setup. Time saved: Immediate.</p>
+            <a href="#pricing" class="cta-button">Start with Leeloo Today</a>
+            <p class="reassurance">Setup takes 15 minutes. Free trial for Starter plan - no credit card required.</p>
+        </div>
+    </section>
+
+    <!-- Footer Summary -->
+    <section class="footer-summary">
+        <div class="container">
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h3>What You Get</h3>
+                    <p>Real control over email, calendar, and contacts through Telegram. Voice or text. Any language. Actual automation, not just suggestions.</p>
+                </div>
+                
+                <div class="summary-item">
+                    <h3>How It Works</h3>
+                    <p>Connect your Google/Outlook accounts. Message Leeloo through Telegram. Watch tasks complete automatically. That's it.</p>
+                </div>
+                
+                <div class="summary-item">
+                    <h3>Risk-Free Trial</h3>
+                    <p>14-day free trial for Starter plan. No credit card. Cancel anytime. If you're not saving 2+ hours daily, we'll make it right.</p>
+                </div>
+                
+                <div class="summary-item">
+                    <h3>Start Now</h3>
+                    <p>Setup takes 15 minutes. Your first automated task happens within 20 minutes. Time saved: Immediate.</p>
+                    <a href="#pricing" style="display: inline-block; margin-top: 20px; background: #1976d2; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: 600;">Get Started →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
