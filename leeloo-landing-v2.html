@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leeloo - AI Assistant That Actually Executes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #080A2B !important;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #080A2B !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a:hover {
+            color: #4A9FFF;
+        }
+        
+        .nav-cta {
+            background: linear-gradient(135deg, #2E7FD8 0%, #4A9FFF 100%);
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(46, 127, 216, 0.3);
+        }
+        
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(46, 127, 216, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #2E7FD8 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #00A8E8 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+        
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #5BC0EB 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-content .highlight {
+            background: linear-gradient(135deg, #2E7FD8 0%, #5BC0EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2E7FD8 0%, #4A9FFF 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(46, 127, 216, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46, 127, 216, 0.5);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .stat-item {
+            text-align: left;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2E7FD8 0%, #5BC0EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .phone-mockup {
+            max-width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+            animation: floatPhone 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatPhone {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .glow-circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(46, 127, 216, 0.2) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        /* Trust Section */
+        .trust-section {
+            padding: 4rem 2rem;
+            
+            
+            background: #080A2B !important;
+        }
+        
+        .trust-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .trust-title {
+            font-size: 0.9rem;
+            color: #4A9FFF;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .badge-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00A8E8 0%, #5BC0EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .badge-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+        
+        /* Section Title */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-label {
+            font-size: 0.9rem;
+            color: #4A9FFF;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Glass Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(46, 127, 216, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .card-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+        
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .feature-icon {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(46, 127, 216, 0.2) 0%, rgba(74, 159, 255, 0.2) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .feature-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .feature-content p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+        }
+        
+        /* Modules Section */
+        .module-category {
+            margin-bottom: 4rem;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #00A8E8;
+            font-style: italic;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #4A9FFF;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .module-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        .module-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .module-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .module-card li {
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .module-card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #4A9FFF;
+            font-weight: bold;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 3rem;
+            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 107, 53, 0.5);
+        }
+        
+        .pricing-card.featured {
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid #4A9FFF;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: linear-gradient(135deg, #4A9FFF 0%, #5BC0EB 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .pricing-tagline {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4A9FFF;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 2rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .pricing-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, #4A9FFF 0%, #5BC0EB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pricing-price span {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            padding: 0;
+        }
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-cta {
+            width: 100%;
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+        
+        .pricing-bottom {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Testimonials */
+        .testimonials-grid {
+            display: flex;
+            gap: 2rem;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .testimonials-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll-testimonials 30s linear infinite;
+        }
+        
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .testimonials-grid:hover .testimonials-track {
+            animation-play-state: paused;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            min-width: 400px;
+            max-width: 400px;
+            flex-shrink: 0;
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #4A9FFF;
+        }
+        
+        .testimonial-info h4 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .testimonial-info p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        .testimonial-quote {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .faq-icon { font-size: 1.5rem; color: #4A9FFF; transition: transform 0.3s; }
+        
+        .faq-answer {
+            padding: 0 2rem 1.5rem 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            display: none !important;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block !important;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Final CTA */
+        .cta-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, rgba(46, 127, 216, 0.1) 0%, rgba(0, 168, 232, 0.1) 100%);
+            text-align: center;
+        }
+        
+        .cta-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta-container h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-container p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #080A2B !important;
+            
+            padding: 3rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .cards-grid,
+            .modules-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .testimonial-card {
+                min-width: 320px;
+            }
+        }
+    
+/* --- Pricing alignment & featured card normalization --- */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.pricing-card { 
+    display: flex; 
+    flex-direction: column; 
+}
+.pricing-card.featured { 
+    transform: none; 
+}
+.pricing-card.featured:hover { 
+    transform: translateY(-10px); 
+}
+/* Normalize header space so prices align */
+.pricing-card h3 { min-height: 40px; display:flex; align-items:center; }
+.pricing-tagline { min-height: 56px; display:flex; align-items:center; }
+.pricing-description { min-height: 100px; display:flex; align-items:center; }
+/* Align price row */
+.pricing-price { 
+    min-height: 80px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    margin: 1.5rem 0;
+}
+/* Stretch features, pin CTA to bottom */
+.pricing-features { flex: 1 1 auto; }
+.pricing-bottom { margin-top: auto; }
+
+/* Match Payment Terms width to a pricing card */
+.payment-terms-box {
+    max-width: 350px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid #4A9FFF;
+    border-radius: 10px;
+}
+
+/* FAQ visibility corrections */
+.faq-answer { display: none !important; }
+.faq-item.active .faq-answer { display: block !important; }
+.faq-item.active .faq-icon { transform: rotate(180deg); }
+
+/* CTA centering */
+.btn-primary.pricing-cta {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    line-height: 1.2;
+    padding: 1rem 2.5rem;
+}
+/* Only trial button stacks text */
+.btn-primary.pricing-cta.trial-multiline { 
+    flex-direction: column; 
+    gap: 0.2rem; 
+}
+.btn-primary.pricing-cta.trial-multiline span { display:block; }
+
+/* --- Uniform section backgrounds set to #080A2B --- */
+.section, .trust-section, .cta-section { background: #080A2B !important; }
+
+/* --- Simplify hero background orbs: keep one at top-right --- */
+.orb-1, .orb-3 { display: none !important; }
+.orb-2 { top: -100px; right: -100px; bottom: auto !important; }
+
+/* --- Favorite tools: one-line strip with endless right-to-left scroll --- */
+.tools-strip { position: relative; overflow: hidden; padding: 0.75rem 0; }
+.tools-track { display: flex; align-items: center; gap: 3rem; width: max-content; animation: scroll-tools 40s linear infinite; }
+.tools-strip:hover .tools-track { animation-play-state: paused; }
+.tool-logo { display: inline-flex; align-items: center; justify-content: center; }
+.tool-logo img { height: 44px; width: auto; display: block; }
+@keyframes scroll-tools { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@media (max-width: 768px) { .tools-track { gap: 2rem; } .tool-logo img { height: 36px; } }
+
+
+/* --- Center icons and subtitles in The Problem section --- */
+.cards-grid .glass-card { text-align: center; }
+.cards-grid .glass-card .card-icon { display: block; margin-left: auto; margin-right: auto; }
+.cards-grid .glass-card .card-title { text-align: center; }
+.cards-grid .glass-card .card-icon img { height: 84px; width: auto; }
+
+
+/* --- The Solution: transparent feature icons & uniform size --- */
+.features-grid .feature-item .feature-icon {
+  background: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+.features-grid .feature-item .feature-icon img {
+  height: 84px !important;
+  width: auto !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* === Uniform deep navy background everywhere (#080A2B) === */
+:root { --leeloo-bg: #080A2B; }
+body, header, footer, section,
+.hero, .hero::before, .hero::after,
+.section, .section::before, .section::after,
+.footer, .footer::before, .footer::after {
+  background: var(--leeloo-bg) !important;
+  background-color: var(--leeloo-bg) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Match inner containers/panels so no second background shows */
+[class*="container"], .content-wrapper, .trust-container,
+.problem-section, .features-section, .modules-section,
+.pricing-section, .faq-section, .footer {
+  background: #080A2B !important;
+  background-color: var(--leeloo-bg) !important;
+  background-image: none !important;
+}
+
+/* Remove decorative clouds/overlays in hero */
+[class*="cloud"], .hero .cloud, .hero .clouds, .hero::before, .hero::after {
+  background-image: none !important;
+  opacity: 0 !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+
+/* --- Final background unification: make core and area backgrounds identical (#080A2B) --- */
+html, body, main, .page-wrapper, .wrapper, .outer, .app, .site, .core-background {
+  background: #080A2B !important;
+  background-color: #080A2B !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+</style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/logo_leeloo_final.png" alt="Leeloo" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#pricing" class="nav-cta">Get Started</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    Your Game-Changing AI Assistant.<br>
+                    You Speak, <span class="highlight">Leeloo Executes.</span>
+                </h1>
+                <p>
+                    Manages your emails, calendar, contacts, and web searches — all by simple voice or text commands. Just say:<br><br>
+                    • "Reply in Japanese to Ken's email confirming I'll attend the meeting."<br>
+                    • "Set up a Project Alpha meeting tomorrow at 3 PM with Ben and Lola, and ask them to prepare a PowerPoint."<br><br>
+                    And it's done!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn-primary">Start your 14-day free trial</a>
+                    <a href="#features" class="btn-secondary">See How It Works</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">15min</span>
+                        <span class="stat-label">Setup time</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">30+</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1-3hrs</span>
+                        <span class="stat-label">Saved daily</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="glow-circle"></div>
+                <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/leeloo_tools-activating.png" alt="Leeloo App Interface" class="phone-mockup">
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Trust Section -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <p class="trust-title">Works with your favorite tools</p>
+            <div class="tools-strip" aria-label="Integrations">
+                <div class="tools-track">
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_gmail.png" alt="Gmail" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_outlook.png" alt="Outlook" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_calendar.png" alt="Google Calendar" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_contacts.png" alt="Google Contacts" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_oneDrive.svg" alt="OneDrive" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_googleDrive.png" alt="Google Drive" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_webSearch.png" alt="Web Search" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_weather.png" alt="Weather" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_Microsoft-Teams.png" alt="Microsoft Teams" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_meet.png" alt="Google Meet" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_zoom.png" alt="Zoom" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_norton.png" alt="Norton" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_gmail.png" alt="Gmail" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_outlook.png" alt="Outlook" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_calendar.png" alt="Google Calendar" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_contacts.png" alt="Google Contacts" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_oneDrive.svg" alt="OneDrive" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_googleDrive.png" alt="Google Drive" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_webSearch.png" alt="Web Search" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_weather.png" alt="Weather" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_Microsoft-Teams.png" alt="Microsoft Teams" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_meet.png" alt="Google Meet" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_zoom.png" alt="Zoom" loading="lazy" decoding="async"></span>
+                    <span class="tool-logo"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_norton.png" alt="Norton" loading="lazy" decoding="async"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Problem Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">The Problem</p>
+                <h2 class="section-title">Your Digital Life Shouldn't<br>Feel Like a Full-Time Job</h2>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="glass-card">
+                    <span class="card-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_ConstantlySwitchingApps.png" alt="Constantly Switching Apps" loading="lazy" decoding="async" style="height:56px;width:auto;"></span>
+                    <h3 class="card-title">Constantly Switching Apps</h3>
+                    <p class="card-description">Opening Gmail, switching to Calendar, checking Contacts. Your AI gives suggestions while you do all the work.</p>
+                </div>
+                
+                <div class="glass-card">
+                    <span class="card-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_LimitedRealControl2.png" alt="Limited Real Control" loading="lazy" decoding="async" style="height:56px;width:auto;"></span>
+                    <h3 class="card-title">Limited Real Control</h3>
+                    <p class="card-description">Most AI tools create drafts. You still copy, paste, click, and manually complete every task yourself.</p>
+                </div>
+                
+                <div class="glass-card">
+                    <span class="card-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_lock2.png" alt="Locked in Platforms" loading="lazy" decoding="async" style="height:56px;width:auto;"></span>
+                    <h3 class="card-title">Locked in Platforms</h3>
+                    <p class="card-description">Your data sits in web interfaces. Voice control is limited. Workflow automation remains out of reach.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">The Solution</p>
+                <h2 class="section-title">Leeloo Executes Your Instructions</h2>
+                <p class="section-description">Real control over your digital workspace. Not suggestions but actual execution.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_voiceCommand2.png" alt="Voice or Text Commands" loading="lazy" decoding="async"></div>
+                    <div class="feature-content">
+                        <h3>Voice or Text Commands</h3>
+                        <p>"Schedule lunch with Ben tomorrow at noon" - Done. No apps to open, no clicks needed. Just speak naturally.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_gmail2.png" alt="Real Email Control" loading="lazy" decoding="async" style="height:84px;width:auto;"></div>
+                    <div class="feature-content">
+                        <h3>Real Email Control</h3>
+                        <p>Sends emails, creates drafts, replies to threads, labels messages. Actual execution, not just suggestions.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_smartCalendar2.png" alt="Calendar Intelligence" loading="lazy" decoding="async"></div>
+                    <div class="feature-content">
+                        <h3>Calendar Intelligence</h3>
+                        <p>Creates events with attendees, checks availability, reschedules meetings. Handles the entire workflow.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_google_contacts2.png" alt="Smart Contacts" loading="lazy" decoding="async"></div>
+                    <div class="feature-content">
+                        <h3>Smart Contacts</h3>
+                        <p>Remembers nicknames, finds details, updates information. Say "email Ben" - it knows who you mean.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_languages2.png" alt="Any Language" loading="lazy" decoding="async"></div>
+                    <div class="feature-content">
+                        <h3>Any Language</h3>
+                        <p>Communicate in French, English, Spanish, Chinese - whatever feels natural. Leeloo responds in your language.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon"><img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/icon_webSearch2.png" alt="Web Search & Weather" loading="lazy" decoding="async"></div>
+                    <div class="feature-content">
+                        <h3>Web Search & Weather</h3>
+                        <p>Get instant answers to questions, current news, and weather forecasts. Just ask Leeloo anything.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modules" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">Power-Ups</p>
+                <h2 class="section-title">Additional Modules</h2>
+                <p class="section-description">Choose 3 modules with Business plan, 6 with Expert plan</p>
+            </div>
+            
+            <!-- Productivity Modules -->
+            <div class="module-category">
+                <h3 class="category-title">Productivity Modules</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>1. Daily Summary & Smart Alerts</h4>
+                        <ul>
+                            <li>Morning briefing via email and voice with: unread emails, day's agenda, weather, financial news (S&P 500, NASDAQ), exchange rates (Bitcoin, EUR/USD)</li>
+                            <li>Customizable with up to 5 sections</li>
+                            <li>Smart notifications for important emails (AI-filtered)</li>
+                            <li>Meeting reminders with preparation tips</li>
+                            <li>End-of-day summary</li>
+                            <li>Weekend planning on Fridays</li>
+                            <li>Custom alert rules</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>2. Smart Inbox & Email Management</h4>
+                        <ul>
+                            <li>Auto-sort, tag, and prioritize inbox based on sender, topic, urgency</li>
+                            <li>Summarize long emails into 2-line briefs</li>
+                            <li>Auto-archive newsletters or move them to "Later" label</li>
+                            <li>Detect when an email was sent but unanswered after X days → send reminder or draft follow-up</li>
+                            <li>For messages with "action items," automatically add tasks or reminders</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>3. Post-Meeting Action Generator</h4>
+                        <ul>
+                            <li>After each meeting (Zoom / Google / MS Teams), meeting minutes generation from recordings → create tasks → add to Todoist/Notion/n8n</li>
+                            <li>If meeting was with a client, auto-send recap email</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>4. Advanced Task Management</h4>
+                        <ul>
+                            <li>Notion/Asana/Trello integration</li>
+                            <li>Project creation from conversations</li>
+                            <li>Task dependencies tracking</li>
+                            <li>Team assignment capabilities</li>
+                            <li>Progress reporting</li>
+                            <li>Sprint planning support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Intelligence Modules -->
+            <div class="module-category">
+                <h3 class="category-title">Business Intelligence Modules</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>5. Document Intelligence</h4>
+                        <ul>
+                            <li>Analyze uploaded files (PDF, Word, Text, Images)</li>
+                            <li>Multi-page PDF analysis and summarization</li>
+                            <li>Extract data to summarize, translate, and compare</li>
+                            <li>Contract key points extraction</li>
+                            <li>Comparison between documents</li>
+                            <li>Form data extraction</li>
+                            <li>Document translation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>6. CRM Sync</h4>
+                        <ul>
+                            <li>HubSpot/Salesforce integration</li>
+                            <li>Automatic contact syncing</li>
+                            <li>Deal/opportunity tracking</li>
+                            <li>Activity logging from emails/meetings</li>
+                            <li>Pipeline reporting</li>
+                            <li>Task synchronization</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>7. RAG/Knowledge Base</h4>
+                        <ul>
+                            <li>Upload company documents, policies, procedures</li>
+                            <li>10GB storage in Neon with pgvector</li>
+                            <li>Intelligent retrieval for questions</li>
+                            <li>Document versioning and updates</li>
+                            <li>Team knowledge sharing</li>
+                            <li>Automatic FAQ generation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personal Utility Modules -->
+            <div class="module-category">
+                <h3 class="category-title">Personal Utility Modules</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>8. Travel Organizer</h4>
+                        <ul>
+                            <li>Detect booking confirmations → add flights/hotels to calendar automatically</li>
+                            <li>Send pre-travel checklists, weather forecasts, and reminders (passport, luggage, etc.)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>9. Business Card Scanner</h4>
+                        <ul>
+                            <li>Captures business card photos via Telegram</li>
+                            <li>Uses OpenAI Vision API to extract: name, title, company, email, phone, address</li>
+                            <li>Automatically creates/updates Google Contacts</li>
+                            <li>Sends confirmation with extracted data for verification</li>
+                            <li>Handles multiple languages and card formats</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>10. Expense Tracker</h4>
+                        <ul>
+                            <li>Scans receipts via photo</li>
+                            <li>Categorizes expenses automatically</li>
+                            <li>Monthly expense reports</li>
+                            <li>Integration with Google Sheets for accounting</li>
+                            <li>Mileage tracking from calendar events</li>
+                            <li>Currency conversion for international expenses</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-card">
+                        <h4>11. Personalized Insights</h4>
+                        <ul>
+                            <li>Analyzes your daily interactions, schedule, and communication tone to identify productivity patterns and priorities</li>
+                            <li>Provides weekly summary of your time usage (meetings / emails / focus blocks / travel)</li>
+                            <li>Suggests optimization tips — e.g., "Your meetings exceed 60% of your day; consider grouping them on specific days"</li>
+                            <li>Detects recurring tasks and offers to automate them through your existing Leeloo modules</li>
+                            <li>Monitors well-being signals (late-night emails, weekend work) and gives gentle alerts for balance</li>
+                            <li>Optional "Focus Mode" reminders: suggest when to pause notifications or schedule breaks</li>
+                            <li>All data analyzed locally and never shared externally</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">Pricing</p>
+                <h2 class="section-title">Choose Your Plan</h2>
+                <p class="section-description">Start with what you need today. Scale as you grow.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <p class="pricing-tagline">For professionals who want an all-in-one AI business assistant</p>
+                    <p class="pricing-description">Simplify your daily operations with unified calendar, email, contacts, and reminders</p>
+                    <div class="pricing-price">$69<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ Intelligent calendar management</li>
+                        <li>✓ Email operations (send, reply, draft)</li>
+                        <li>✓ Smart reminders and alerts</li>
+                        <li>✓ Contact management</li>
+                        <li>✓ Web search and weather</li>
+                        <li>✓ Voice and text input</li>
+                        <li>✓ 30+ languages</li>
+                        <li>✓ 2,000 messages/month</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <div class="pricing-bottom">
+                        <a href="#" class="btn-primary pricing-cta trial-multiline"><span>Start your 14-day</span><span>free trial</span></a>
+                        <p style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.5); font-size: 0.9rem;">$690/year (save $138)</p>
+                    </div>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <h3>Business</h3>
+                    <p class="pricing-tagline">For executives who need a smart, learning AI assistant</p>
+                    <p class="pricing-description">Leeloo understands context, learns from your habits, and helps you operate at scale</p>
+                    <div class="pricing-price">$199<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li><strong>Everything in Starter, PLUS:</strong></li>
+                        <li>✓ Long-term memory & learning</li>
+                        <li>✓ Historical context awareness</li>
+                        <li>✓ Document reading (PDF, Word)</li>
+                        <li>✓ Choose ANY 3 modules</li>
+                        <li>✓ 12,000 messages/month</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Weekly productivity insights</li>
+                        <li>✓ 30-min onboarding session</li>
+                    </ul>
+                    <div class="pricing-bottom">
+                        <a href="#" class="btn-primary pricing-cta">Get Started</a>
+                        <p style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.5); font-size: 0.9rem;">$1,990/year (save $398)</p>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Expert with Voice</h3>
+                    <p class="pricing-tagline">Your voice-driven AI Chief of Staff</p>
+                    <p class="pricing-description">Activate hands-free, delegate instantly, and enjoy a personalized AI partner</p>
+                    <div class="pricing-price">$499<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li><strong>Everything in Starter, PLUS:</strong></li>
+                        <li>✓ Voice activation: "Hey Leeloo"</li>
+                        <li>✓ Long-term memory & learning</li>
+                        <li>✓ Document reading (PDF, Word)</li>
+                        <li>✓ Choose ANY 6 modules</li>
+                        <li>✓ Unlimited messages</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Weekly productivity insights</li>
+                        <li>✓ White-glove setup (60 min)</li>
+                    </ul>
+                    <div class="pricing-bottom">
+                        <a href="#" class="btn-primary pricing-cta">Get Started</a>
+                        <p style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.5); font-size: 0.9rem;">$4,990/year (save $998)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-terms-box">
+                <p style="color: rgba(255,255,255,0.7); line-height: 1.8;"><strong style="color: #4A9FFF;">Payment Terms:</strong></p>
+                <ul style="color: rgba(255,255,255,0.6); margin-left: 2rem; margin-top: 1rem; line-height: 1.8;">
+                    <li>Monthly billing (cancel anytime)</li>
+                    <li>Annual billing saves 17%</li>
+                    <li>No setup fees</li>
+                    <li>Secure payment via Stripe</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">Success Stories</p>
+                <h2 class="section-title">People Who Got Their Time Back</h2>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonials-track">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Woman1.png" alt="Sarah M." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Sarah M.</h4>
+                            <p>Marketing Consultant</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"I used to spend 30 minutes every morning organizing my inbox and calendar. Now I voice message Leeloo while making coffee and everything is handled before I sit down. Saves me 2 hours daily."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Man1.png" alt="David L." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>David L.</h4>
+                            <p>Startup Founder</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"The game-changer is that it actually does the work. Other AI tools give me suggestions. Leeloo sends the email, creates the meeting, updates the contact. I just keep moving."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Woman2.png" alt="Marie D." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Marie D.</h4>
+                            <p>International Sales Director</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"I'm French working in Japan. I can speak Japanese fairly well, but writing is challenging. Leeloo does it perfectly! I just say: 'Send an email in Japanese to Lola,' and it's done. Saves me around three hours every day."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Man2.png" alt="Julien D." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Julien D.</h4>
+                            <p>CEO</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"As a CEO traveling between Paris, New York, and Singapore, Leeloo is my secret weapon. I manage my team's schedule, respond to urgent emails, and coordinate meetings across time zones"”all while waiting for my flight."</p>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Woman1.png" alt="Sarah M." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Sarah M.</h4>
+                            <p>Marketing Consultant</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"I used to spend 30 minutes every morning organizing my inbox and calendar. Now I voice message Leeloo while making coffee and everything is handled before I sit down. Saves me 2 hours daily."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Man1.png" alt="David L." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>David L.</h4>
+                            <p>Startup Founder</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"The game-changer is that it actually does the work. Other AI tools give me suggestions. Leeloo sends the email, creates the meeting, updates the contact. I just keep moving."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Woman2.png" alt="Marie D." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Marie D.</h4>
+                            <p>International Sales Director</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"I'm French working in Japan. I can speak Japanese fairly well, but writing is challenging. Leeloo does it perfectly! I just say: 'Send an email in Japanese to Lola,' and it's done. Saves me around three hours every day."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://raw.githubusercontent.com/aigain-automations/leeloo/main/Man2.png" alt="Julien D." class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Julien D.</h4>
+                            <p>CEO</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">"As a CEO traveling between Paris, New York, and Singapore, Leeloo is my secret weapon. I manage my team's schedule, respond to urgent emails, and coordinate meetings across time zones—all while waiting for my flight."</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-label">Questions?</p>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How is Leeloo different from ChatGPT or other AI assistants?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Unlike ChatGPT, which only suggests actions, Leeloo actually executes them. It connects directly to your mailbox, calendar, and contacts to send emails, schedule meetings, update contacts, and much more. You speak — Leeloo does.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is my data safe and private?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely. Your data stays yours. Leeloo never shares or trains on your content. All operations comply with GDPR, APPI, and CCPA regulations. We use industry-standard encryption and secure OAuth connections to your accounts.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>How long does setup take?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Setup takes about 15 minutes. Simply connect your Google or Outlook account, tell Leeloo who your frequent contacts are (with their nicknames), set your preferred language and location — and you're ready to go. Business and Expert plans include onboarding sessions to help you get the most out of Leeloo, but you can also set it up yourself easily with our detailed setup guide.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>What languages does Leeloo support?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Leeloo supports 30+ languages, including English, French, German, Portuguese, Spanish, Chinese, Japanese, Korean, and more. You can communicate in your preferred language, and Leeloo will respond accordingly — even composing emails in languages you don't speak.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I cancel anytime?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, all plans can be cancelled at any time. The Starter plan has no commitment and includes a 14-day free trial. Business and Expert plans have a 2-month minimum.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Which plan should I choose?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Choose Starter if you need basic email, calendar, and contact management. Choose Business if you want long-term memory, document processing, and 3 additional modules. Go with Expert if you need voice activation (similar to Siri or Alexa), unlimited messages, and 6 modules.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Should I install Leeloo from Google Play or the App Store?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        No installation needed. Leeloo is a fully web-based application that works directly from your browser — on both smartphone and computer.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can Leeloo integrate with other software I use?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, Leeloo integrates with many leading tools such as Outlook, Gmail, Google Calendar, Notion, Zoom, Google Meet, Microsoft Teams, and more.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Do I need technical skills to use Leeloo?</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely not! Leeloo was designed to be accessible to everyone — no code, no complex configuration. You simply interact with your AI assistant through voice or text, on an intuitive interface similar to WhatsApp, Messenger, Line, WeChat, or Telegram.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to Get Your Time Back?</h2>
+            <p>Join hundreds of professionals who've automated their daily tasks with Leeloo.</p>
+            <a href="#pricing" class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">Start with Leeloo Today</a>
+            <p style="margin-top: 2rem; font-size: 0.95rem;">Setup takes 15 minutes. Free trial for Starter plan.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>
+                &copy; 2025 Leeloo. All rights reserved. 
+                <span style="margin: 0 1rem;">|</span> 
+                <a href="mailto:contact@leeloo.app" style="color: rgba(255,255,255,0.7); text-decoration: none;">📧 contact@leeloo.app</a>
+                <span style="margin: 0 1rem;">|</span>
+                <a href="#" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms and Privacy Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
